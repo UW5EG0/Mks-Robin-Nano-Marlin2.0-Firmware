@@ -27,7 +27,7 @@
  */
 
 #ifndef AXIS_RELATIVE_MODES
-  #define AXIS_RELATIVE_MODES {}
+  #define AXIS_RELATIVE_MODES {false, false, false}
 #endif
 
 #ifdef SWITCHING_NOZZLE_E1_SERVO_NR
@@ -807,7 +807,7 @@
 #endif
 
 #ifndef HOMING_BUMP_MM
-  #define HOMING_BUMP_MM { 0, 0, 0 }
+  #define HOMING_BUMP_MM { 0, 0 }
 #endif
 
 #if ENABLED(USB_FLASH_DRIVE_SUPPORT) && NONE(USE_OTG_USB_HOST, USE_UHS3_USB)

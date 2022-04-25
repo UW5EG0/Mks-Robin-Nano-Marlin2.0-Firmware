@@ -102,11 +102,13 @@ static void btn_ok_event_cb(lv_obj_t *btn, lv_event_t event) {
         card.openFileRead(cur_name);
         if (card.isFileOpen()) {
           feedrate_percentage = 100;
+#if HAS_EXTRUDERS
           planner.flow_percentage[0] = 100;
           planner.e_factor[0] = planner.flow_percentage[0] * 0.01f;
           #if HAS_MULTI_EXTRUDER
             planner.flow_percentage[1] = 100;
             planner.e_factor[1] = planner.flow_percentage[1] * 0.01f;
+          #endif
           #endif
           card.startOrResumeFilePrinting();
           TERN_(POWER_LOSS_RECOVERY, recovery.prepare());
@@ -195,6 +197,7 @@ static void btn_cancel_event_cb(lv_obj_t *btn, lv_event_t event) {
   if (DIALOG_IS(PAUSE_MESSAGE_OPTION)) {
     TERN_(ADVANCED_PAUSE_FEATURE, pause_menu_response = PAUSE_RESPONSE_RESUME_PRINT);
   }
+  #if HAS_EXTRUDERS
   else if (DIALOG_IS(TYPE_FILAMENT_LOAD_HEAT, TYPE_FILAMENT_UNLOAD_HEAT, TYPE_FILAMENT_HEAT_LOAD_COMPLETED, TYPE_FILAMENT_HEAT_UNLOAD_COMPLETED)) {
     thermalManager.setTargetHotend(uiCfg.hotendTargetTempBak, uiCfg.extruderIndex);
     clear_cur_ui();
@@ -213,6 +216,7 @@ static void btn_cancel_event_cb(lv_obj_t *btn, lv_event_t event) {
     clear_cur_ui();
     draw_return_ui();
   }
+  #endif
   else {
     clear_cur_ui();
     draw_return_ui();

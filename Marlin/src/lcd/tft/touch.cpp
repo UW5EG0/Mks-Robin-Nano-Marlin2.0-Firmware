@@ -194,24 +194,24 @@ void Touch::touch(touch_control_t *control) {
             MenuItemBase::itemIndex = heater;
             MenuItem_int3::action((const char *)GET_TEXT_F(MSG_NOZZLE_N), &thermalManager.temp_hotend[heater].target, 0, thermalManager.hotend_max_target(heater), []{ thermalManager.start_watching_hotend(MenuItemBase::itemIndex); });
           #endif
-        }
+        } else
       #endif
       #if HAS_HEATED_BED
-        else if (heater == H_BED) {
+         if (heater == H_BED) {
           MenuItem_int3::action((const char *)GET_TEXT_F(MSG_BED), &thermalManager.temp_bed.target, 0, BED_MAX_TARGET, thermalManager.start_watching_bed);
-        }
+        }else
       #endif
       #if HAS_HEATED_CHAMBER
-        else if (heater == H_CHAMBER) {
+         if (heater == H_CHAMBER) {
           MenuItem_int3::action((const char *)GET_TEXT_F(MSG_CHAMBER), &thermalManager.temp_chamber.target, 0, CHAMBER_MAX_TARGET, thermalManager.start_watching_chamber);
-        }
+        } else
       #endif
       #if HAS_COOLER
-        else if (heater == H_COOLER) {
+         if (heater == H_COOLER) {
           MenuItem_int3::action((const char *)GET_TEXT_F(MSG_COOLER), &thermalManager.temp_cooler.target, 0, COOLER_MAX_TARGET, thermalManager.start_watching_cooler);
         }
       #endif
-
+        {/*nothing to do*/}
       break;
     case FAN:
       ui.clear_lcd();
@@ -229,7 +229,7 @@ void Touch::touch(touch_control_t *control) {
       MenuItemBase::itemIndex = control->data;
       #if EXTRUDERS == 1
         MenuItem_int3::action((const char *)GET_TEXT_F(MSG_FLOW), &planner.flow_percentage[MenuItemBase::itemIndex], 10, 999, []{ planner.refresh_e_factor(MenuItemBase::itemIndex); });
-      #else
+      #elif EXTRUDERS > 0
         MenuItem_int3::action((const char *)GET_TEXT_F(MSG_FLOW_N), &planner.flow_percentage[MenuItemBase::itemIndex], 10, 999, []{ planner.refresh_e_factor(MenuItemBase::itemIndex); });
       #endif
       break;

@@ -28,8 +28,11 @@
 
 #if HAS_LCD_MENU
 
+#if LINEAR_AXES >= 3
 #define LARGE_AREA_TEST ((X_BED_SIZE) >= 1000 || (Y_BED_SIZE) >= 1000 || (Z_MAX_POS) >= 1000)
-
+#else
+#define LARGE_AREA_TEST ((X_BED_SIZE) >= 1000 || (Y_BED_SIZE) >= 1000)
+#endif
 #include "menu_item.h"
 #include "menu_addon.h"
 
@@ -157,7 +160,9 @@ void _menu_move_distance(const AxisEnum axis, const screenFunc_t func, const int
     switch (axis) {
       case X_AXIS: STATIC_ITEM(MSG_MOVE_X, SS_DEFAULT|SS_INVERT); break;
       case Y_AXIS: STATIC_ITEM(MSG_MOVE_Y, SS_DEFAULT|SS_INVERT); break;
+        #if HAS_Z_AXIS
       case Z_AXIS: STATIC_ITEM(MSG_MOVE_Z, SS_DEFAULT|SS_INVERT); break;
+      #endif
       default:
         TERN_(MANUAL_E_MOVES_RELATIVE, manual_move_e_origin = current_position.e);
         STATIC_ITEM(MSG_MOVE_E, SS_DEFAULT|SS_INVERT);
@@ -177,6 +182,8 @@ void _menu_move_distance(const AxisEnum axis, const screenFunc_t func, const int
     SUBMENU(MSG_MOVE_10MM, []{ _goto_manual_move(10);    });
     SUBMENU(MSG_MOVE_1MM,  []{ _goto_manual_move( 1);    });
     SUBMENU(MSG_MOVE_01MM, []{ _goto_manual_move( 0.1f); });
+    #if HAS_Z_AXIS
+
     if (axis == Z_AXIS && (FINE_MANUAL_MOVE) > 0.0f && (FINE_MANUAL_MOVE) < 0.1f) {
       // Determine digits needed right of decimal
       constexpr uint8_t digs = !UNEAR_ZERO((FINE_MANUAL_MOVE) * 1000 - int((FINE_MANUAL_MOVE) * 1000)) ? 4 :
@@ -193,6 +200,7 @@ void _menu_move_distance(const AxisEnum axis, const screenFunc_t func, const int
         SUBMENU_P(tmp, []{ _goto_manual_move(float(FINE_MANUAL_MOVE)); });
       #endif
     }
+    #endif
   }
   END_MENU();
 }

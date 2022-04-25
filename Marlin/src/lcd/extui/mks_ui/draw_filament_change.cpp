@@ -64,10 +64,12 @@ static void event_handler(lv_obj_t *obj, lv_event_t event) {
       else {
         lv_clear_filament_change();
         lv_draw_dialog(DIALOG_TYPE_FILAMENT_LOAD_HEAT);
+        #if HAS_EXTRUDERS
         if (thermalManager.degTargetHotend(uiCfg.extruderIndex) < gCfgItems.filament_limit_temp) {
           thermalManager.setTargetHotend(gCfgItems.filament_limit_temp, uiCfg.extruderIndex);
           thermalManager.start_watching_hotend(uiCfg.extruderIndex);
         }
+        #endif
       }
       break;
     case ID_FILAMNT_OUT:
@@ -82,10 +84,12 @@ static void event_handler(lv_obj_t *obj, lv_event_t event) {
       else {
         lv_clear_filament_change();
         lv_draw_dialog(DIALOG_TYPE_FILAMENT_UNLOAD_HEAT);
+        #if HAS_EXTRUDERS
         if (thermalManager.degTargetHotend(uiCfg.extruderIndex) < gCfgItems.filament_limit_temp) {
           thermalManager.setTargetHotend(gCfgItems.filament_limit_temp, uiCfg.extruderIndex);
           thermalManager.start_watching_hotend(uiCfg.extruderIndex);
         }
+        #endif
         filament_sprayer_temp();
       }
       break;
@@ -101,10 +105,11 @@ static void event_handler(lv_obj_t *obj, lv_event_t event) {
           gcode.process_subcommands_now_P(uiCfg.extruderIndexBak == 1 ? PSTR("T1") : PSTR("T0"));
       #endif
       feedrate_mm_s = (float)uiCfg.moveSpeed_bak;
+      #if HAS_EXTRUDERS
       if (uiCfg.print_state == PAUSED)
         planner.set_e_position_mm((destination.e = current_position.e = uiCfg.current_e_position_bak));
       thermalManager.setTargetHotend(uiCfg.hotendTargetTempBak, uiCfg.extruderIndex);
-
+#endif
       // lv_clear_filament_change();
       // lv_draw_tool();
       clear_cur_ui();
@@ -114,7 +119,7 @@ static void event_handler(lv_obj_t *obj, lv_event_t event) {
 }
 
 void lv_draw_filament_change() {
-  
+
 #ifdef USE_NEW_LVGL_CONF
   mks_ui.src_main = lv_screen_create(FILAMENTCHANGE_UI);
   lv_obj_t *buttonIn = lv_big_button_create(mks_ui.src_main, "F:/bmp_in.bin", filament_menu.in, INTERVAL_V, titleHeight, event_handler, ID_FILAMNT_IN);

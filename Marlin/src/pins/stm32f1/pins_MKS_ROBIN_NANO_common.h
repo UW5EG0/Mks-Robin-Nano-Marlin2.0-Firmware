@@ -58,33 +58,69 @@
 // Limit Switches
 //
 #define X_STOP_PIN                          PA15
+#if HAS_Y_AXIS
 #define Y_STOP_PIN                          PA12
+#endif
+#if HAS_Z_AXIS
 #define Z_MIN_PIN                           PA11
 #define Z_MAX_PIN                           PC4
-
+#endif
 //
 // Steppers
 //
-#define X_ENABLE_PIN                        PE4
-#define X_STEP_PIN                          PE3
-#define X_DIR_PIN                           PE2
-
-#define Y_ENABLE_PIN                        PE1
-#define Y_STEP_PIN                          PE0
-#define Y_DIR_PIN                           PB9
-
-#define Z_ENABLE_PIN                        PB8
-#define Z_STEP_PIN                          PB5
-#define Z_DIR_PIN                           PB4
-
+#ifndef X_ENABLE_PIN
+  #define X_ENABLE_PIN                        PE4
+#endif
+#ifndef X_STEP_PIN
+  #define X_STEP_PIN                          PE3
+#endif
+#ifndef X_DIR_PIN
+  #define X_DIR_PIN                           PE2
+#endif
+#if HAS_Y_AXIS
+#ifndef Y_ENABLE_PIN
+  #define Y_ENABLE_PIN                        PE1
+#endif
+#ifndef Y_STEP_PIN
+  #define Y_STEP_PIN                          PE0
+#endif
+#ifndef Y_DIR_PIN
+  #define Y_DIR_PIN                           PB9
+#endif
+#endif
+#if HAS_Z_AXIS
+#ifndef Z_ENABLE_PIN
+  #define Z_ENABLE_PIN                        PB8
+#endif
+#ifndef Z_STEP_PIN
+  #define Z_STEP_PIN                          PB5
+#endif
+#ifndef Z_DIR_PIN
+  #define Z_DIR_PIN                           PB4
+#endif
+#endif
+#if EXTRUDERS > 0
+#ifndef E0_ENABLE_PIN
 #define E0_ENABLE_PIN                       PB3
+#endif
+#ifndef E0_STEP_PIN
 #define E0_STEP_PIN                         PD6
+#endif
+#ifndef E0_DIR_PIN
 #define E0_DIR_PIN                          PD3
-
+#endif
+#endif
+#if EXTRUDERS == 2
+#ifndef E1_ENABLE_PIN
 #define E1_ENABLE_PIN                       PA3
+#endif
+#ifndef E1_STEP_PIN
 #define E1_STEP_PIN                         PA6
+#endif
+#ifndef E1_DIR_PIN
 #define E1_DIR_PIN                          PA1
-
+#endif
+#endif
 //
 // Temperature Sensors
 //
@@ -98,7 +134,7 @@
 #ifndef HEATER_0_PIN
   #define HEATER_0_PIN                      PC3
 #endif
-#if HOTENDS == 1 && DISABLED(HEATERS_PARALLEL)
+#if HOTENDS == 1 && (DISABLED(HEATERS_PARALLEL))
   #ifndef FAN1_PIN
     #define FAN1_PIN                        PB0
   #endif

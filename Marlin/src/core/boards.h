@@ -310,7 +310,8 @@
 #define BOARD_CHITU3D                 4010  // Chitu3D (STM32F103RET6)
 #define BOARD_MKS_ROBIN               4011  // MKS Robin (STM32F103ZET6)
 #define BOARD_MKS_ROBIN_MINI          4012  // MKS Robin Mini (STM32F103VET6)
-#define BOARD_MKS_ROBIN_NANO          4013  // MKS Robin Nano (STM32F103VET6)
+#define BOARD_MKS_ROBIN_NANO          4013  // MKS Robin Nano (STM32F103VET6) optimized for laser cutter
+#define BOARD_MKS_ROBIN_NANO_LASER    9997  // MKS Robin Nano (STM32F103VET6)
 #define BOARD_MKS_ROBIN_NANO_V2       4014  // MKS Robin Nano V2 (STM32F103VET6)
 #define BOARD_MKS_ROBIN_LITE          4015  // MKS Robin Lite/Lite2 (STM32F103RCT6)
 #define BOARD_MKS_ROBIN_LITE3         4016  // MKS Robin Lite3 (STM32F103RCT6)

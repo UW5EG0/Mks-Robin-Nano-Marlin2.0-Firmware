@@ -131,13 +131,13 @@ void lv_draw_acceleration_settings() {
 
     itoa(planner.settings.max_acceleration_mm_per_s2[Z_AXIS], public_buf_l, 10);
     lv_screen_menu_item_1_edit(scr, machine_menu.Z_Acceleration, PARA_UI_POS_X, PARA_UI_POS_Y * 2, event_handler, ID_ACCE_Z, 1, public_buf_l);
-
+#if HAS_EXTRUDERS
     itoa(planner.settings.max_acceleration_mm_per_s2[E_AXIS], public_buf_l, 10);
     lv_screen_menu_item_1_edit(scr, machine_menu.E0_Acceleration, PARA_UI_POS_X, PARA_UI_POS_Y * 3, event_handler, ID_ACCE_E0, 2, public_buf_l);
 
     itoa(planner.settings.max_acceleration_mm_per_s2[E_AXIS_N(1)], public_buf_l, 10);
     lv_screen_menu_item_1_edit(scr, machine_menu.E1_Acceleration, PARA_UI_POS_X, PARA_UI_POS_Y * 4, event_handler, ID_ACCE_E1, 3, public_buf_l);
-
+#endif
     lv_big_button_create(scr, "F:/bmp_back70x40.bin", machine_menu.previous, PARA_UI_TURN_PAGE_POS_X, PARA_UI_TURN_PAGE_POS_Y, event_handler, ID_ACCE_UP, true);
   }
 
